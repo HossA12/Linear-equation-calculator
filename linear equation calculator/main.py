@@ -27,7 +27,7 @@ def _slope_and_intercept(x, y):
     """
     # Check if the lists of x and y values have the same number of elements
     if len(x) != len(y):
-        return "The lists of x and y values must have the same number of elements."
+        raise ValueError("The lists of x and y values must have the same number of elements.")
 
     # Calculate the mean (average) of the x values and the y values
     mean_x = np.mean(x)
@@ -82,12 +82,16 @@ def linear_equation(x, y):
      slope = 2.0
      intercept = 0.0
     """
-    slope = _slope_and_intercept(x, y)[0]
-    intercept = _slope_and_intercept(x, y)[1]
+    slope_and_intercept = _slope_and_intercept(x, y)
 
-    if intercept != 0:
-        return f" linear equation\n-----------------\n y = {slope}x + {intercept}\n-----------------\n" \
-               f" slope = {slope}\n intercept = {intercept}"
+    if slope_and_intercept != "The denominator is zero, which means all x values are the same. Slope is undefined.":
+        slope, intercept = slope_and_intercept[0], slope_and_intercept[1]
+
+        if intercept != 0:
+            return f" linear equation\n-----------------\n y = {slope}x + {intercept}\n-----------------\n" \
+                   f" slope = {slope}\n intercept = {intercept}"
+        else:
+            return f" linear equation\n-----------------\n y = {slope}x\n-----------------\n" \
+                   f" slope = {slope}\n intercept = {intercept}"
     else:
-        return f" linear equation\n-----------------\n y = {slope}x\n-----------------\n" \
-               f" slope = {slope}\n intercept = {intercept}"
+        return "The denominator is zero, which means all x values are the same. Slope is undefined."
